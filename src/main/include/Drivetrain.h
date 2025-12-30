@@ -198,7 +198,7 @@ private:
     
     void UpdateOdometry();
 
-    void TryAddVisionMeasurement(double correctedGyroDegrees);
+    void TryAddVisionMeasurement();
 
     bool m_bUseCameraMeasurements;
 
