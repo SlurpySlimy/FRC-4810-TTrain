@@ -47,7 +47,7 @@ class Arm
 {
 public:
 
-    // Constructor/Destructor
+    // Constructor or Destructor
     Arm();
     ~Arm()
         {  }
@@ -88,5 +88,5 @@ private:
 
     frc::Timer *m_pTimeoutTimer;
 
-    configs::MotorOutputConfigs m_MotorConfigs;
+    //motar sutff
 };
