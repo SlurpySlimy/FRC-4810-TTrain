@@ -61,5 +61,9 @@ class RobotIO
       frc::XboxController m_DriveController{ 0 };
       frc::XboxController m_OperatorController{ 1 };
 
-      
+   
+
+      //arm hardware
+      hardware::TalonFX m_ArmMotor  {14};
+
 };

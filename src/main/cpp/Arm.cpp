@@ -51,7 +51,7 @@ void Arm::Execute()
                 {
                     m_eCommand = arm::COMMAND_NONE;
                     return; //sees if command is home and if yes then if its
-                    //not at a limit then return home 
+                    //at home already return nothing. and no command
                 }
 
                 //Apply motor configs
