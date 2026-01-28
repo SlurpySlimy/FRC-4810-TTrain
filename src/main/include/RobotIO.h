@@ -66,4 +66,7 @@ class RobotIO
       //arm hardware
       hardware::TalonFX m_ArmMotor  {14};
 
+      //DIO stuff
+      frc::DigitalInput m_ArmLimitSwitch {2};
+
 };
