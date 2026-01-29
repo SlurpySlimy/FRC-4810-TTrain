@@ -53,9 +53,9 @@ class RobotIO
       void UpdateInputStatus();
 
       // Accessor Methods.
-
-      
-
+// THN Arm Limit Accessor method
+      inline bool GetArmLimit()
+         {return (m_ArmLimitSwitch.Get());} // if it is unexpectedly false or inverted then you can change it here
       // Xbox Controllers
 
       frc::XboxController m_DriveController{ 0 };

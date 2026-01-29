@@ -88,5 +88,5 @@ private:
 
     frc::Timer *m_pTimeoutTimer;
 
-    //motar sutff
+    configs::MotorOutputConfigs m_MotorConfigs;
 };

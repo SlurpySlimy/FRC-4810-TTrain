@@ -16,8 +16,9 @@ void Arm::Initialize( RobotIO *p_pRobotIO )
     m_pTimeoutTimer = new frc::Timer();
     m_pTimeoutTimer->Reset();
 
-  
-}
+    m_pRobotIO->m_ArmMotor.GetConfigurator().Refresh(m_MotorConfigs);
+} /// stores the arm motor information within the variable motor config. 
+//refresh passes it into the variable
 
 void Arm::UpdateInputStatus()
 {
@@ -47,7 +48,7 @@ void Arm::Execute()
             // *--------------*
             if(m_eCommand == arm::COMMAND_HOME)
             {
-                if( m_pRobotIO->GetArmLimit() )
+                if( m_pRobotIO->GetArmLimit() ) // pr  m_ArmLimitSwitch.Get()
                 {
                     m_eCommand = arm::COMMAND_NONE;
                     return; //sees if command is home and if yes then if its
@@ -162,13 +163,13 @@ void Arm::Execute()
             if(m_pRobotIO->GetArmLimit() || bIsTimedOut)
             {
                 //Stop Motors
-                m_pRobotIO->m_ArmMotor.Set(0);
+                m_pRobotIO->m_ArmMotor.Set(0); //or StopMotor()
 
                 //Enable brake mode
                 m_MotorConfigs.NeutralMode = NeutralMode::Brake;
                 m_pRobotIO->m_ArmMotor.GetConfigurator().Apply(m_MotorConfigs);
 
-                //Reset Encoders
+                //Reset Encoders Applying units setting to zero
                 m_pRobotIO->m_ArmMotor.SetPosition(units::angle::turn_t{0});
 
                 m_eCommand = arm::COMMAND_NONE;
