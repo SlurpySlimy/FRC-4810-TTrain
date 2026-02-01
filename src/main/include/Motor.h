@@ -23,6 +23,7 @@
     {
         COMMAND_NONE,
         COMMAND_HOME,
+        COMMAND_IDLE,
         COMMAND_MANUAL_FORWARD,
         COMMAND_MANUAL_REVERSE,
         COMMAND_AUTO_FORWARD,
@@ -42,7 +43,7 @@
     static constexpr double dAutoForwardSpeed = 0.25;
 
     // Setpoint Constants
-    static constexpr double dAutoForwardSetpoint = 10.0;  //10 
+    static constexpr double dAutoForwardSetpoint = 10.0;  //10 rotations, and this is in position NOT counts
         /* 
             How many turns/counts Motor takes until setpoint, only for auto forward
         */

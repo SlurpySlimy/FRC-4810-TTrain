@@ -19,11 +19,13 @@ void Motor::Initialize( RobotIO *p_pRobotIO )
     m_pRobotIO->m_Motor.GetConfigurator().Refresh(m_MotorConfigs); //derived from robot IO
 } /// stores the motor motor information within the variable motor config. 
 //refresh passes it into the variable
+//basically all the configs of the motor will be refreshed and placed into m_Motor, stated in Motor.h
+//refreshes probably clears it
 
 void Motor::UpdateInputStatus()
 {
 
-}
+}//nothing here for now
 
 void Motor::Execute()
 {
@@ -160,14 +162,14 @@ void Motor::Execute()
                 bIsTimedOut = true;
             }
 
-            if(m_pRobotIO->GetMotorLimit() || bIsTimedOut)
+            if(m_pRobotIO->GetMotorLimit() || bIsTimedOut) // if it is at the limit
             {
                 //Stop Motors
                 m_pRobotIO->m_Motor.StopMotor(); //or StopMotor()
 
                 //Enable brake mode
-                m_MotorConfigs.NeutralMode = NeutralMode::Brake;
-                m_pRobotIO->m_Motor.GetConfigurator().Apply(m_MotorConfigs);
+                m_MotorConfigs.NeutralMode = NeutralMode::Brake; //sets to break
+                m_pRobotIO->m_Motor.GetConfigurator().Apply(m_MotorConfigs); //makes it break by applying
 
                 //Reset Encoders Applying units setting to zero
                 m_pRobotIO->m_Motor.SetPosition(units::angle::turn_t{0});
@@ -188,10 +190,10 @@ void Motor::Execute()
                 bIsTimedOut = true;
             }
 
-            if(m_eCommand == motor::COMMAND_STOP || bIsTimedOut)
+            if(m_eCommand == motor::COMMAND_STOP || bIsTimedOut) //forward limit?
             {
                 //Stop Motors
-                m_pRobotIO->m_Motor.Set(0);
+                m_pRobotIO->m_Motor.StopMotor();
 
                 //Enable brake mode
                 m_MotorConfigs.NeutralMode = NeutralMode::Brake;
@@ -216,7 +218,7 @@ void Motor::Execute()
             if(m_eCommand == motor::COMMAND_STOP || m_pRobotIO->GetMotorLimit() || bIsTimedOut)
             {
                 //Stop Motors
-                m_pRobotIO->m_Motor.Set(0);
+                m_pRobotIO->m_Motor.StopMotor();
 
                 //Enable brake mode
                 m_MotorConfigs.NeutralMode = NeutralMode::Brake;
@@ -237,11 +239,12 @@ void Motor::Execute()
             {
                 bIsTimedOut = true;
             }
-
+//not sure why m_pRobotIO->m_Motor.GetPosition().GetValueAsDouble() wouldnt be in Motor.h for future use under a 
+//function that calls it, but the code works and so i wont touch it
             if(m_pRobotIO->m_Motor.GetPosition().GetValueAsDouble() >= motor::dAutoForwardSetpoint || bIsTimedOut)
-            {
+            {//10 rotations before it stops
                 //Stop Motors
-                m_pRobotIO->m_Motor.Set(0);
+                m_pRobotIO->m_Motor.StopMotor();
 
                 //Enable brake mode
                 m_MotorConfigs.NeutralMode = NeutralMode::Brake;
