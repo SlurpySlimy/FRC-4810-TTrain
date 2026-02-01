@@ -48,7 +48,7 @@ void Motor::Execute()
             // *--------------*
             // * Home Command *
             // *--------------*
-            if(m_eCommand == motor::COMMAND_HOME)
+            if(m_eCommand == motor::COMMAND_HOME) 
             {
                 if( m_pRobotIO->GetMotorLimit() ) // pr  m_LimitSwitch.Get()
                 {
@@ -77,6 +77,11 @@ void Motor::Execute()
             // *----------------------*
             else if(m_eCommand == motor::COMMAND_MANUAL_FORWARD)
             {
+                 if(m_pRobotIO->GetMotorLimit())
+                {
+                    m_eCommand = motor::COMMAND_NONE;
+                    return;
+                }
                 //Apply motor configs
                 m_MotorConfigs.NeutralMode = NeutralMode::Coast;
                 m_pRobotIO->m_Motor.GetConfigurator().Apply(m_MotorConfigs);
@@ -123,7 +128,7 @@ void Motor::Execute()
             // *--------------------*
             else if(m_eCommand == motor::COMMAND_AUTO_FORWARD)
             {
-                if( m_pRobotIO->m_Motor.GetPosition().GetValueAsDouble() >= motor::dAutoForwardSetpoint )
+                if( m_pRobotIO->m_Motor.GetPosition().GetValueAsDouble() >= motor::dAutoForwardSetpoint || m_pRobotIO->GetMotorLimit())
                 {
                     m_eCommand = motor::COMMAND_NONE;
                     return;
