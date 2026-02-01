@@ -64,7 +64,7 @@ class RobotIO
    
 
       //arm hardware
-      hardware::TalonFX m_ArmMotor  {14}; // changed for project
+      hardware::TalonFX m_ArmMotor  {15}; // changed for project
 
       //DIO stuff
       frc::DigitalInput m_ArmLimitSwitch {2};
@@ -74,10 +74,17 @@ class RobotIO
       // THN Motor rotation Accessor Method
       inline bool GetMotorRotation()
          {return (m_MotorRotation.Get());}
+
+
       //THN Motor reset
       inline bool GetMotorLimit()
-         {return (m_MotorRotation.Get());}
+         {return (m_MotorLimitSwitch.Get());}
+
+
+
       //hardware and DIO
+
+
        hardware::TalonFX m_Motor  {14};
       frc::DigitalInput m_MotorlimitSwitch {0};
 

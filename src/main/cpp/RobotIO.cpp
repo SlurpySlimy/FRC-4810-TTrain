@@ -77,5 +77,9 @@ void RobotIO::RobotInit()
 
 void RobotIO::UpdateInputStatus()
 {
-   
+   //THN Add Arm limit Status to Smart Dashboard
+   frc::SmartDashboard::PutBoolean("Arm Limit Switch ", GetArmLimit())
+
+   //THN Add Motor Limit Status to Smart Dashboard
+   frc::SmartDashboard::PutBoolean("Motor Limit Switch ", GetMotorLimit())
 }
