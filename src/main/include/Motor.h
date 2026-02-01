@@ -54,8 +54,8 @@ class Motor
 public:
 
     // Constructor or Destructor
-    Arm();//constructor
-    ~Arm()//destructor
+    Motor();//constructor
+    ~Motor()//destructor
         {  }
 
     // Accessor Methods which when called set the command to home
@@ -76,15 +76,15 @@ public:
 
         // checks if the state is in the current state
     inline bool IsIdle()
-        { return(m_eState == arm::eState::STATE_IDLE); }
+        { return(m_eState == motor::eState::STATE_IDLE); }
     inline bool IsHoming()
-        { return(m_eState == arm::eState::STATE_HOMING); }
-    inline bool IsManualForward()
-        { return(m_eState == arm::eState::COMMAND_MANUAL_FORWARD); }
-    inline bool IsManualLowering()
-        { return(m_eState == arm::eState::COMMAND_MANUAL_REVERSE); }
-    inline bool IsAutoRaising()
-        { return(m_eState == arm::eState::STATE_AUTO_RAISE); }
+        { return(m_eState == motor::eState::STATE_HOMING); }
+    inline bool IsManualForwarding()
+        { return(m_eState == motor::eState::STATE_MANUAL_FORWARD); }
+    inline bool IsManualReversing()
+        { return(m_eState == motor::eState::STATE_MANUAL_REVERSE); }
+    inline bool IsAutoForwarding()
+        { return(m_eState == motor::eState::STATE_AUTO_FORWARD); }
 
     // Class Methods
     void Initialize( RobotIO *p_pRobotIO ); //points to robot IO and Initializes variables
