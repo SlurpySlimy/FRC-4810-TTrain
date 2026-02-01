@@ -21,6 +21,9 @@
 #include "Drivetrain.h"                // Drivetrain state machine class
                                        //    definition
 
+#include "Motor.h"                     //Motor State machine class
+
+#include "Arm.h"                       //Arm state machine class
 // *------------------------------------------------*
 // * Top Level (Main) State Machine Enumerated Type *
 // *------------------------------------------------*
@@ -30,7 +33,19 @@ namespace RobotMain
    enum eState
    {
       STATE_START = 0,
-      STATE_IDLE = 1,
+      STATE_IDLE = 1, 
+      // THN - Arm States
+      ARM_STATES = 2,
+      ARM_STATE_HOMING = 3,
+      ARM_STATE_MANUAL_RAISE = 4,
+      ARM_STATE_MANUAL_LOWER = 5,
+      ARM_STATE_AUTO_RAISE = 6,
+      //THN - Motor states
+      MOTOR_STATES = 7,
+      MOTOR_STATE_HOMING = 8,
+      MOTOR_STATE_MANUAL_FORWARD = 9,
+      MOTOR_STATE_MANUAL_REVERSE = 10,
+      MOTOR_STATE_AUTO_FORWARD = 11,
       STATE_ERROR = 99
    };
 
@@ -68,6 +83,9 @@ class MainStateMachine
 
       // State Machine Object Instances.
       Drivetrain m_Drivetrain;
+
+      Arm m_Arm; //THN Arm object instance
+      Motor m_Motor; //THN motor Object instance
 };
 
 #endif // MAIN_STATE_MACHINE_H_

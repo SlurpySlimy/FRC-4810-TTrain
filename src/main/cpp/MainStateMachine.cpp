@@ -104,6 +104,10 @@ void MainStateMachine::Initialize(
 
    m_pRobotIO = p_pRobotIO;
    m_Drivetrain.Initialize( p_pRobotIO );
+   
+   m_Arm.Initialize( p_pRobotIO ); //THN
+   
+   m_Motor.Initialize( p_pRobotIO ); //THN
 }
 
 //-------------------------------------------------------------------
@@ -112,7 +116,8 @@ void MainStateMachine::Initialize(
 
 void MainStateMachine::UpdateStatus()
 {
-
+   m_Arm.UpdateInputStatus(); //THN Updates arm status
+   m_Motor.UpdateInputStatus(); //THN Updates Motor staus
 }
 
 //-------------------------------------------------------------------
@@ -139,7 +144,8 @@ void MainStateMachine::Execute()
 
          // Call the subsystem execute methods to allow them to advance
          // through the idle and start states.
-
+         m_Arm.Execute();
+         m_Motor.Execute();
 
          // printf( "Main - Advancing To Idle State\n" );
          m_eState = RobotMain::eState::STATE_IDLE;
@@ -152,10 +158,102 @@ void MainStateMachine::Execute()
       // Look for triggers for operations that are mutually exclusive (i.e.
       // cannot happen simultaneously because they use the same hardware).
 
-      else if ( m_eState == RobotMain::eState::STATE_IDLE )
+      else if ( m_eState == RobotMain::eState::STATE_IDLE ) 
+      //THN within there'll be 2 states for the motors, while I could make another sub sub state machine to
+      // do this its both simpler and faster to do it within the main. Hence right and left bumpers will transfer to different states
+
       {
-         
-      }
+         if(m_pRobotIO->m_DriveController.GetRightBumperButton()) {
+            m_eState = RobotMain::eState::ARM_STATES;
+         }
+         if(m_pRobotIO->m_DriveController.GetLeftBumperButton()) { 
+            m_eState = RobotMain::eState::MOTOR_STATES;
+         }
+
+         }
+
+      // *----------------------------------*
+      // *            Arm States            *
+      // *----------------------------------*
+
+      else if (m_eState == RobotMain::eState::ARM_STATES) //THN
+
+
+         {         //THN Driver B button - Arm home 
+         if(m_pRobotIO->m_DriveController.GetBButton()){
+            m_Arm.Home();
+
+            m_Arm.Execute();
+
+            m_eState = RobotMain::eState::ARM_STATE_HOMING;
+         }
+
+            //THN Driver x button - Arm home 
+         if(m_pRobotIO->m_DriveController.GetXButton()){
+            m_Arm.Home();
+
+            m_Arm.Execute();
+
+            m_eState = RobotMain::eState::ARM_STATE_AUTO_RAISE;      }
+    
+            //THN Driver y button - Arm home 
+         if(m_pRobotIO->m_DriveController.GetYButton()){
+            m_Arm.ManualRaise();
+
+            m_Arm.Execute();
+
+            m_eState = RobotMain::eState::ARM_STATE_MANUAL_RAISE;}
+               //THN Driver A button - Arm home 
+         if(m_pRobotIO->m_DriveController.GetAButton()){
+            m_Arm.ManualLower();
+
+            m_Arm.Execute();
+
+            m_eState = RobotMain::eState::ARM_STATE_MANUAL_LOWER;}
+         }
+
+      // *------------------------------------*
+      // *            Motor States            *
+      // *------------------------------------*
+      else if (m_eState == RobotMain::eState::MOTOR_STATES) //THN
+         {         //THN Driver B button - Arm home 
+         if(m_pRobotIO->m_DriveController.GetBButton()){
+            m_Arm.Home();
+
+            m_Arm.Execute();
+
+            m_eState = RobotMain::eState::ARM_STATE_HOMING;
+         }
+
+            //THN Driver x button - Arm home 
+         if(m_pRobotIO->m_DriveController.GetXButton()){
+            m_Arm.Home();
+
+            m_Arm.Execute();
+
+            m_eState = RobotMain::eState::ARM_STATE_AUTO_RAISE;      }
+    
+            //THN Driver y button - Arm home 
+         if(m_pRobotIO->m_DriveController.GetYButton()){
+            m_Arm.ManualRaise();
+
+            m_Arm.Execute();
+
+            m_eState = RobotMain::eState::ARM_STATE_MANUAL_RAISE;}
+               //THN Driver A button - Arm home 
+         if(m_pRobotIO->m_DriveController.GetAButton()){
+            m_Arm.ManualLower();
+
+            m_Arm.Execute();
+
+            m_eState = RobotMain::eState::ARM_STATE_MANUAL_LOWER;}
+
+
+         }
+
+
+
+
 
       // *===================================================================*
       // *                                                                   *
@@ -164,6 +262,35 @@ void MainStateMachine::Execute()
       // *===================================================================*
 
       // Code to be added
+
+        // ****************
+        // * Homing State *
+        // ****************
+        else if(m_eState == RobotMain::eState::MOTOR_STATE_HOMING)
+        {
+        }
+
+        // ************************
+        // * Manual forward State *
+        // ************************
+        else if(m_eState == RobotMain::eState::MOTOR_STATE_MANUAL_FORWARD)
+        {
+        }
+        
+        // ************************
+        // * Manual Reverse State *
+        // ************************
+        else if(m_eState == RobotMain::eState::MOTOR_STATE_MANUAL_REVERSE)
+        {
+        }
+
+        // ********************
+        // * Auto forward State *
+        // ********************
+        else if(m_eState == RobotMain::eState::MOTOR_STATE_AUTO_FORWARD)
+        {
+        }
+
 
 
 
