@@ -8,7 +8,7 @@
 // ---------  --------  -------------------------------------------
 // 10-Jan-24    JJB     Initial Version.
 // 03-Mar-24    GMS     Added Homing State
-//
+// 31-Jan-26    THN     Added 2 additional states with their substates
 //---------------------------------------------------------------------------
 
 #ifndef MAIN_STATE_MACHINE_H_

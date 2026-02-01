@@ -1,3 +1,16 @@
+//---------------------------------------------------------------------------
+//
+// MainStateMachine.cpp - Main State Machine Class Implementation.
+//
+//---------------------------------------------------------------------------
+//
+// Date       Name      Changes
+// ---------  --------  -------------------------------------------
+// 31-Jan-26    THN     Copied from Arm cpp with heavy modifications to comments and naming
+//                      as well as changing some .set(0) to stop() to remove numbers
+//
+//---------------------------------------------------------------------------
+
 #include "Motor.h"
 
 // Constructor

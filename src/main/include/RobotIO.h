@@ -7,7 +7,7 @@
 // Date       Name      Changes
 // ---------  --------  -------------------------------------------
 // 17-Feb-22  JJB       Class created.
-//
+// 31-Jan-26  THN       Added methods for motor and arm as well as hardware and DIO
 //---------------------------------------------------------------------------
 
 #pragma once
