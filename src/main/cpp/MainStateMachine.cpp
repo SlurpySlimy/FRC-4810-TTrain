@@ -166,7 +166,7 @@ void MainStateMachine::Execute()
          if(m_pRobotIO->m_DriveController.GetRightBumperButton()) {
             m_eState = RobotMain::eState::ARM_STATES;
          }
-         if(m_pRobotIO->m_DriveController.GetLeftBumperButton()) { 
+         else if(m_pRobotIO->m_DriveController.GetLeftBumperButton()) { 
             m_eState = RobotMain::eState::MOTOR_STATES;
          }
 
@@ -372,7 +372,15 @@ void MainStateMachine::Execute()
         else if(m_eState == RobotMain::eState::MOTOR_STATE_MANUAL_FORWARD)
         {
          m_Motor.Execute();
-         if(m_Motor.IsManualForwarding())
+         if(!m_pRobotIO->m_DriveController.GetYButton())
+         {
+            m_Motor.Stop();
+            m_eState = RobotMain::eState::MOTOR_STATES;
+         }
+         
+         m_Motor.Execute();
+
+         if(m_Motor.IsIdle)
          {
             m_eState = RobotMain::eState::MOTOR_STATES;
          }
@@ -383,8 +391,16 @@ void MainStateMachine::Execute()
         // ************************
         else if(m_eState == RobotMain::eState::MOTOR_STATE_MANUAL_REVERSE)
         {
+
+         if(!m_pRobotIO->m_DriveController.GetAButton())
+         {
+            m_Motor.Stop();
+            m_eState = RobotMain::eState::MOTOR_STATES;
+         }
+         
          m_Motor.Execute();
-         if(m_Motor.IsManualReversing())
+
+         if(m_Motor.IsIdle)
          {
             m_eState = RobotMain::eState::MOTOR_STATES;
          }
@@ -396,7 +412,7 @@ void MainStateMachine::Execute()
         else if(m_eState == RobotMain::eState::MOTOR_STATE_AUTO_FORWARD)
         {
          m_Motor.Execute();
-         if(m_Motor.IsAutoForwarding())
+         if(m_Motor.IsIdle())
          {
             m_eState = RobotMain::eState::MOTOR_STATES;
          }
